@@ -1,4 +1,6 @@
-# Prerequisites
+# TypeScript for Nuxt Developers
 
-- Node LTS _(should be autmatically used with nvm)_
+## Prerequisites
+
+- Node LTS _(should be autmatically used via nvm)_
 - [bun](https://bun.sh/) _(should also work with npm though)_

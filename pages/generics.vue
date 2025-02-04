@@ -1,8 +1,16 @@
 <template>
+  <!--NumberGenericsExample
+    :list="[1, 2, 3]"
+    v-on:item-render="(item) => `hey ${item}`"
+  /-->
   <MDC :value="markdown" tag="article" />
 </template>
 
 <script setup lang="ts">
+import type { LiteralToPrimitive, LiteralToPrimitiveDeep } from "type-fest";
+import GenericsExample from "../components/generics-example.vue";
+const NumberGenericsExample = GenericsExample<number>;
+
 const markdown = `
 # Generics Basics
 
@@ -43,7 +51,7 @@ const firstElement = getFirstArrayElement<number>(myElements); // firstElement i
 
 \`\`\`
 
-## Advanced 🧪: Recreate common types for fun 
+## Advanced 🧪: Recreate common types for fun
 
 Generics support keywoards such as \`extends\` and \`infer\` to create more complex types and can use libraries from the ecosystem.
 \`\`\`ts
@@ -68,5 +76,34 @@ const myComputedValue = myComputed(() => myValue);
 
 - https://www.typescriptlang.org/docs/handbook/2/generics.html
 - https://type-level-typescript.com/
+- https://www.typescriptlang.org/docs/handbook/utility-types.html
 `;
+/*
+function getFirstArrayElement<ArrayType>(arr: Array<ArrayType>) {
+  return arr[0];
+}
+
+let myNumberElements = [1, 2, 3];
+let myStringElements = ["hey", "you"];
+let myBooleanElements = [true, true];
+let myMixedElements = [1, "hey"];
+
+const myFirstNumber = getFirstArrayElement(myNumberElements);
+const myFirstString = getFirstArrayElement(myStringElements);
+const myFirstMixed = getFirstArrayElement(myMixedElements);
+getFirstArrayElement(myBooleanElements);
+
+myFirstNumber.toLocaleString(); */
+
+function myComputed<MyReturnType>(callback: () => MyReturnType): MyReturnType {
+  return callback();
+}
+
+const myComputedValue = myComputed(() => 3);
+
+function myRef<RefValue>(value: RefValue): LiteralToPrimitive<RefValue> {
+  return value as any;
+}
+
+const myValue = myRef(3);
 </script>

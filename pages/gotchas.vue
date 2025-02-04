@@ -51,4 +51,12 @@ const invalidAnimal = {
 serializeBasicAnimalData(invalidAnimal); // ❌ Error: Excess properties are not allowed
 \`\`\`
 `;
+
+type User = { id: number };
+
+const user1: User = { id: 1, name: "Alice" }; // ERROR
+const user2 = { id: 1, name: "Alice" };
+
+const user3: User = user2; // ✅ No error! Indirect assignment bypasses the check.
+const { id, ...rest } = user3;
 </script>

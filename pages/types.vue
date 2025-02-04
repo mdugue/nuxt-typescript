@@ -65,9 +65,15 @@ _Personally I prefer type aliases for composition and interfaces for declaration
 > - Examples for functions
 >   - inference
 >   - destructuring
- 
+
 ## Documentation
 https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
 
 `;
+
+function greet({ name }: { name: string; age: number }): string {
+  return "Hello, " + name;
+}
+
+/* greet() */
 </script>

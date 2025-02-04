@@ -6,25 +6,20 @@ Later
 
   -->
 <template>
+  <PropsEmitExample
+    :users="[
+      { name: 'Fabian B', age: 42 },
+      { name: 'Fabian D', age: 41 },
+    ]"
+    @clicked="(name) => console.log(name)"
+  />
   <div class="flex gap-2 flex-col">
-    <!-- <PropsExample :user="{ age: 23, name: 'Mario Andres' }" /> -->
-    <!-- <PropsEmitExample
-      @clicked="(name) => (selectedUser = name)"
-      :users="[
-        { age: 23, name: 'Mario Andres' },
-        { age: 33, name: 'Maria Magdalena' },
-      ]"
-    /> -->
-    <!-- <ModelExample
-      v-model="selectedUser"
-      :users="[
-        { age: 23, name: 'Mario Andres' },
-        { age: 33, name: 'Maria Magdalena' },
-      ]"
-    />
-    <div class="font-black text-2xl text-green-400">
-      {{ selectedUser?.name }}
-    </div> -->
+    <div
+      class="w-40 h-40 bg-red-100"
+      @mousemove="(event) => console.log(event.clientX, event.clientY)"
+    >
+      My Div
+    </div>
     <MDC :value="markdown" tag="article" />
   </div>
 </template>
@@ -130,8 +125,10 @@ const trackMousePosition: HTMLElement["onmousemove"] = (event) => {
 
 `;
 
-const user = ref<{ name: string; age: number }>({
+const user = ref<{ name: string; age?: number }>({
   name: "Mario",
   age: 23,
 });
+
+user.value = { name: "Mario2" };
 </script>

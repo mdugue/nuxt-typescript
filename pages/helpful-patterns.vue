@@ -1,5 +1,9 @@
 <template>
   <MDC :value="markdown" tag="article" />
+  <div v-for="user in userList">
+    <div v-if="user.__typename === 'StaffMember'">{{ user.role }}</div>
+    <div v-else>{{ user.accessLevel }}</div>
+  </div>
 </template>
 <script setup lang="ts">
 const markdown = `
@@ -117,4 +121,64 @@ let test: string | number = Math.random() > 0.5 ? 3 : "test";
 - https://www.typescriptlang.org/docs/handbook/utility-types.html
 - https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions
 `;
+
+const i18nDictionary = {
+  hello: "Hallo",
+  goodBye: "Auf Wiedersehen",
+  Hi: "Hi",
+} as const;
+
+type DictionaryType = typeof i18nDictionary;
+
+type I18NKeys = keyof DictionaryType;
+
+function translate(key: I18NKeys) {
+  return i18nDictionary[key];
+}
+
+translate("Hi");
+
+type MyArrayType = Array<string>;
+type MyArrayEntryType = MyArrayType[number];
+
+type MyToupleType = [string, number];
+type MyToupleEntry = MyToupleType[number];
+type MyToupleEntryFirst = MyToupleType[0];
+type MyToupleEntrySecond = MyToupleType[1];
+
+// --
+
+type StaffMember = {
+  __typename: "StaffMember";
+  name: string;
+  role: string;
+};
+type Admin = {
+  __typename: "Admin";
+  name: string;
+  accessLevel: number;
+};
+
+const userList: (StaffMember | Admin)[] = [
+  { name: "John", role: "Developer", __typename: "StaffMember" },
+  { name: "Mara", role: "Sales", __typename: "StaffMember" },
+  { name: "Jane", accessLevel: 5, __typename: "Admin" },
+];
+
+userList.map((user) => {
+  if (user.__typename === "StaffMember") {
+    console.log(user.role);
+  }
+});
+
+userList.map((user) => {
+  if ("role" in user) {
+    console.log(user.role);
+  }
+});
+
+const myAdmins = userList.filter((user) => user.__typename === "Admin");
+const myStaffMembers = userList.filter(
+  (user) => user.__typename === "StaffMember",
+);
 </script>
